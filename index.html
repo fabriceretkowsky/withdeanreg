@@ -1,0 +1,64 @@
+<p>
+To register a player for the new season, you need to do 2 things.
+</p>
+<p>
+First, make the payment.
+</p>
+<p>
+Option 1: Pay £150 upfront using BACS, and take a screenshot of the confirmation of your payment.
+</p>
+<p>
+Option 2: Pay in 3 instalments of £51 by credit/debit card, using the Checkout link below, and note your receipt ID. Note: this includes a charge of £3 to cover banking costs.
+</p>
+
+
+<!-- Load Stripe.js on your website. -->
+<script src="https://js.stripe.com/v3"></script>
+
+<!-- Create a button that your customers click to complete their purchase. Customize the styling to suit your branding. -->
+<button
+  style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+  id="checkout-button-plan_H8zoHDAkOF7om8"
+  role="link"
+>
+  Checkout
+</button>
+
+<div id="error-message"></div>
+
+<script>
+(function() {
+  var stripe = Stripe('pk_test_UMvYANRcyzaSUWdIkfoJlEEM00j1P468ss');
+
+  var checkoutButton = document.getElementById('checkout-button-plan_H8zoHDAkOF7om8');
+  checkoutButton.addEventListener('click', function () {
+    // When the customer clicks on the button, redirect
+    // them to Checkout.
+    stripe.redirectToCheckout({
+      items: [{plan: 'plan_H8zoHDAkOF7om8', quantity: 1}],
+
+      // Do not rely on the redirect to the successUrl for fulfilling
+      // purchases, customers may not always reach the success_url after
+      // a successful payment.
+      // Instead use one of the strategies described in
+      // https://stripe.com/docs/payments/checkout/fulfillment
+      successUrl: 'https://sites.google.com/view/withdeanyouthregtest/success',
+      cancelUrl: 'https://sites.google.com/view/withdeanyouthregtest/cancel',
+    })
+    .then(function (result) {
+      if (result.error) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer.
+        var displayError = document.getElementById('error-message');
+        displayError.textContent = result.error.message;
+      }
+    });
+  });
+})();
+</script>
+
+<p>
+Second, fill in <a target="_" href="https://docs.google.com/forms/d/e/1FAIpQLScJag_CJ28XuDTRVOMBt2UKZNWhQBvxqjh2JituiBurHjvGEQ/viewform">this form</a> to provide all required information about the player. (note this will require people to sign into Google - if that's not acceptable, we'll have to ask them to email the picture and screenshot separately)
+</p>
+
+
